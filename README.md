@@ -96,8 +96,21 @@ docker run \
     'foo:$1$0G2g0GSt$ewU0t6GXG15.0hWoOX8X9.:e:1001'
 ```
 
-Tip: you can use this Python code to generate encrypted passwords:  
-`docker run --rm python:alpine python -c "import crypt; print(crypt.crypt('YOUR_PASSWORD'))"`
+Tip: you can use this code to generate encrypted passwords: (crypt is deprecated in python maybe best to find an alternative) 
+```
+#!/bin/sh
+
+# Prompt the user for the password without echoing it
+echo "Enter your password: "
+stty -echo
+read password
+stty echo
+echo
+
+# Run the Docker command with the input password
+docker run --rm python:alpine python -c "import crypt; print(crypt.crypt('$password'))"
+Enter your password:
+```
 
 ## Logging in with SSH keys
 
